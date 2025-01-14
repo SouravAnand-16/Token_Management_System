@@ -65,10 +65,10 @@ class TokenManager {
     }
 }
 
-const numTokens = 10;
+const numTokens = 1000;
 const tokenManager = new TokenManager(numTokens);
 
-const numOperations = 5;
+const numOperations = 10;
 const timeStep = null;
 
 tokenManager.simulateOperations(numOperations, timeStep);
