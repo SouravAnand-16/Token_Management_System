@@ -21,11 +21,12 @@ This project includes:
 1. Open a terminal in the project directory.
 2. Run the script using Node.js:
    ```bash
-   node test.js
+   node test.js <number of operations>
    ```
-3. Enter the number of operations to simulate when prompted:
+3. Example:
    ```
-   Enter the number of operations to simulate: 1000
+   node test.js 2
+   2 refer to the number of operations to be simulate
    ```
 
 ## Output
