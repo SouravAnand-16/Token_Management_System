@@ -36,7 +36,7 @@ The system will display the following:
 
 ### Example Output
 ```
-Enter the number of operations to simulate: 10
+Simulation time: 10
 Token Usage Counts:
 Token 1: 2 uses
 Token 2: 1 use
