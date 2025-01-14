@@ -1,3 +1,4 @@
+const readline = require('readline');
 
 class Token {
     constructor(id) {
@@ -65,7 +66,6 @@ class TokenManager {
     }
 
     displayResults() {
-        console.log("Token Usage Counts:");
         for (const token of this.tokens) {
             console.log(`${token.id}: ${token.usageCount} uses`);
         }
@@ -80,13 +80,33 @@ class TokenManager {
     }
 }
 
-const numTokens = 10;
+// const numTokens = 10;
+// const tokenManager = new TokenManager(numTokens);
+
+// const numOperations = 4;
+// const resetInterval = null;
+
+// tokenManager.simulateOperations(numOperations, resetInterval);
+// tokenManager.displayResults();
+
+const numTokens = 10; 
+const args = process.argv.slice(2);
+
+if (args.length < 1) {
+    console.error("Please provide the number of operations as a command-line argument.");
+    process.exit(1);
+}
+
+const numOperations = parseInt(args[0], 10);
+if (isNaN(numOperations) || numOperations <= 0) {
+    console.error("Invalid number of operations. Please provide a positive integer.");
+    process.exit(1);
+}
+
+console.log(`Simulation Time: ${numOperations} operations`);
+
 const tokenManager = new TokenManager(numTokens);
-
-const numOperations = 4;
-const resetInterval = null;
-
-tokenManager.simulateOperations(numOperations, resetInterval);
+tokenManager.simulateOperations(numOperations);
 tokenManager.displayResults();
 
 
