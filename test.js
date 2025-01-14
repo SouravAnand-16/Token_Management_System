@@ -1,4 +1,3 @@
-// Token Management System in JavaScript
 
 class Token {
     constructor(id) {
@@ -18,22 +17,34 @@ class TokenManager {
 
     // 1. Token Selection with the least usage count
     selectToken() {
-        this.checkAndReset(); 
-        const minUsage = Math.min(...this.tokens.map(token => token.usageCount));
-        const leastUsedTokens = this.tokens.filter(token => token.usageCount === minUsage);
+        this.checkAndReset();
+
+        let minUsage = Infinity;
+        let leastUsedTokens = [];
+
+        for (const token of this.tokens) {
+            if (token.usageCount < minUsage) {
+                minUsage = token.usageCount;
+                leastUsedTokens = [token];
+            } else if (token.usageCount === minUsage) {
+                leastUsedTokens.push(token);
+            }
+        }
+
         const selectedToken = leastUsedTokens[Math.floor(Math.random() * leastUsedTokens.length)];
-        
         selectedToken.usageCount++;
         return selectedToken;
     }
 
-    // 2. Reseting all token along with usage count
+    // 2. Token reset along with usage count
     resetUsageCounts() {
-        this.tokens.forEach(token => token.usageCount = 0);
+        for (const token of this.tokens) {
+            token.usageCount = 0;
+        }
         this.lastResetTime = Date.now();
     }
 
-    // 3. Reseting token once it pass 24hrs
+    // 3. Token reset after 24hrs
     checkAndReset() {
         const currentTime = Date.now();
         const hoursSinceLastReset = (currentTime - this.lastResetTime) / (1000 * 60 * 60);
@@ -42,12 +53,12 @@ class TokenManager {
         }
     }
 
-    // Simulate token operations
-    simulateOperations(numOperations, timeStep = null) {
+    // function to simulate token
+    simulateOperations(numOperations, resetInterval = null) {
         for (let i = 0; i < numOperations; i++) {
             this.selectToken();
 
-            if (timeStep && (i + 1) % timeStep === 0) {
+            if (resetInterval && (i + 1) % resetInterval === 0) {
                 this.resetUsageCounts();
             }
         }
@@ -55,23 +66,27 @@ class TokenManager {
 
     displayResults() {
         console.log("Token Usage Counts:");
-        this.tokens.forEach(token => console.log(`${token.id}: ${token.usageCount} uses`));
+        for (const token of this.tokens) {
+            console.log(`${token.id}: ${token.usageCount} uses`);
+        }
 
         const minUsage = Math.min(...this.tokens.map(token => token.usageCount));
         const leastUsedTokens = this.tokens.filter(token => token.usageCount === minUsage);
 
         console.log("\nLeast Used Token(s):");
-        leastUsedTokens.forEach(token => console.log(`${token.id}: ${token.usageCount} use(s)`));
+        for (const token of leastUsedTokens) {
+            console.log(`${token.id}: ${token.usageCount} use(s)`);
+        }
     }
 }
 
-const numTokens = 1000;
+const numTokens = 10;
 const tokenManager = new TokenManager(numTokens);
 
-const numOperations = 10;
-const timeStep = null;
+const numOperations = 4;
+const resetInterval = null;
 
-tokenManager.simulateOperations(numOperations, timeStep);
+tokenManager.simulateOperations(numOperations, resetInterval);
 tokenManager.displayResults();
 
 
